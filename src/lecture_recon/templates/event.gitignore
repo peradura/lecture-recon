@@ -1,0 +1,4 @@
+# lecture-recon 행사 디렉터리: 원자료·중간 산출물·판독용 축소 사진은 git 에서 뺀다
+raw/
+work/
+*-notes/slides/

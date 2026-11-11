@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lecture-recon"
+version = "0.1.0"
+description = "강연 녹음·슬라이드 사진 → 3층 재구성 노트(전사/발표별 노트/종합 리포트)의 기계적 단계"
+requires-python = ">=3.10"
+dependencies = ["pyyaml", "pillow"]
+
+[project.optional-dependencies]
+asr = ["faster-whisper"]
+search = ["ddgs", "trafilatura", "pymupdf"]
+dev = ["pytest"]
+
+[project.scripts]
+lecture-recon = "lecture_recon.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+lecture_recon = ["templates/*", "prompts/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

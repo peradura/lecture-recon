@@ -1,0 +1,23 @@
+# lecture-recon 행사 설정. 사람이 채우고 모든 명령이 읽는다. (형식: docs/format.md)
+slug: {{slug}}
+name: {{name}}
+date: {{date}}            # YYYY-MM-DD (필수)
+timezone: Asia/Seoul
+venue: ""
+organizer: ""
+sources: []               # 행사 정보 근거 URL
+reconstructor: ""         # 재구성한 사람(노트 README·리포트 머리말). 비우면 CLI report·fill 은 "미기재", 골격은 placeholder
+talks: []
+# 발표를 적을 때는 위 `talks: []` 를 지우고 아래 형식으로 채운다 (number = 프로그램 순서).
+# talks:
+#   - number: 1
+#     speaker: 이희석
+#     org: 42dot
+#     title: "From Data to Driving"
+#     language: ko       # ko|en|mixed → asr 언어 (mixed → 자동 감지)
+#     recordings:        # 복수면 첫 녹음이 주 녹음(전사·정렬 기준), 나머지는 asr 만
+#       - file: raw/audio/01.m4a
+#         started_at: "2026-10-20T10:05:00"   # 녹음 시작 절대시각. 없으면 파일 mtime - 길이로 추정(status 경고)
+#         offset_sec: 0                        # 사진 정렬 보정(초). 양수면 사진이 늦게 찍힌 것으로 취급
+#     photos_dir: raw/photos/01                # 선택
+#     aliases: [Heeseok Lee, 42dot AI]         # 선택: 발표자·소속의 다른 표기. verify 가 원문이 발표자 측 자료인지 가릴 때 쓴다

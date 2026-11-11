@@ -1,0 +1,22 @@
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# envs
+.venv/
+venv/
+.env
+
+# 행사 디렉터리는 보통 ~/research/lectures/<slug>/ (이 레포 밖, init 이 templates/event.gitignore 를 복사).
+# 실수로 레포 안에 만들었을 때를 대비해 같은 규칙을 둔다.
+raw/
+work/
+*-notes/slides/
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
+.omc/
