@@ -6,7 +6,7 @@ triggers: ["lecture-recon", "강연 정리", "강연 재구성", "녹음 정리"
 
 # lecture-recon — 강연 재구성 워크플로
 
-레포: `~/research/lecture-recon` (사양 `PROJECT.md`, 형식 `docs/format.md`). CLI: `~/research/lecture-recon/.venv/bin/lecture-recon`.
+레포: 이 스킬 폴더의 두 단계 위(기본 `~/research/lecture-recon`; 사양 `PROJECT.md`, 형식 `docs/format.md`). CLI: 레포의 `.venv/bin/lecture-recon`. 설치는 레포 README "설치".
 출력: `~/research/lectures/<slug>/`. **공용 위키(`~/research/wiki`)에는 쓰지 않는다.** 위키 반영은 사용자 확인 후 별도.
 
 ## 원칙 (형식의 핵심)
@@ -96,7 +96,7 @@ lecture-recon lint <event_dir>
 ## CLI 백엔드로 돌리는 경우
 
 서버·Claude 토큰 없이(노트북 + 무료 LLM) 하려면 4·6·7·8·9단계를 CLI 가 한다. 규칙은 이 문서와 같고, 지시문은 스킬과 CLI 가 같은 파일을 쓴다:
-`~/research/lecture-recon/src/lecture_recon/prompts/{correct,claims,verify,notes,report,slides}.md`. 스킬 흐름에서 Claude 가 해당 단계를 할 때도 이 파일의 규칙(교정 거부 조건, 판정 4가지, 근거 표기)을 따른다.
+레포의 `src/lecture_recon/prompts/{correct,claims,verify,notes,report,slides}.md`. 스킬 흐름에서 Claude 가 해당 단계를 할 때도 이 파일의 규칙(교정 거부 조건, 판정 4가지, 근거 표기)을 따른다.
 ```
 lecture-recon correct <event_dir> NN --backend gemini     # 또는 --backend manual | ollama
 lecture-recon claims  <event_dir> NN --backend gemini
@@ -112,7 +112,7 @@ lecture-recon report  <event_dir> --backend gemini
 - 설정이 없으면 backend 는 `claude-code` 이고 CLI 는 LLM 을 부르지 않는다. 기본값은 `~/.config/lecture-recon/config.yaml` 의 `backend:`.
 - 사용자 형식이 있으면 그것을 따른다: config.yaml `templates_dir`·`prompts_dir`(같은 이름 파일이 패키지 것을 대신함), `required_sections`(lint 필수 절). 스킬 흐름에서 노트·리포트를 직접 쓸 때도 그 템플릿·프롬프트를 읽어 따른다.
 - CLI 결과물(`work/verify/NN.json`, `work/correct/NN.json`)은 스킬 흐름에서도 근거로 쓸 수 있다. 판정이 "확인하지 않은 것"(사유: 검색 실패·인용문 불일치 등)인 항목은 WebSearch/WebFetch 로 다시 대조한다.
-- 설계·한계는 `~/research/lecture-recon/docs/design-backends.md`.
+- 설계·한계는 레포의 `docs/design-backends.md`.
 
 ## 마무리 보고
 사용자에게: 생성 파일 경로, 발표별 사진 유무·대조 판정 수, 남은 불명확 개수, 확인 못 한 항목 수, lint 결과. 위키 반영 여부는 묻는다.

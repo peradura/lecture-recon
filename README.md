@@ -21,25 +21,33 @@ backend 는 설정 파일(`~/.config/lecture-recon/config.yaml` 의 `backend:`) 
 
 ## 설치
 
-공유 서버(sudo 없음) 기준, 사용자 공간 venv 만 쓴다. 외부 도구: `ffmpeg`, `ffprobe`.
+필요한 것: Python 3.10+, [uv](https://docs.astral.sh/uv/)(또는 pip 가 있는 venv), `ffmpeg`·`ffprobe`. sudo 없이 사용자 공간 venv 만 쓴다.
 
 ```bash
-cd ~/research/lecture-recon
+git clone https://github.com/peradura/lecture-recon.git
+cd lecture-recon
 uv venv .venv
 uv pip install -e ".[dev]"          # pyyaml, pillow, pytest
 uv pip install -e ".[asr]"          # faster-whisper (asr 단계에서만 필요)
 uv pip install -e ".[search]"       # ddgs, trafilatura, pymupdf (CLI 원문 대조에서만 필요)
 .venv/bin/lecture-recon --help      # 또는 .venv/bin/python -m lecture_recon --help
+.venv/bin/python -m pytest -q       # 설치 확인(네트워크·API 키 불필요)
+```
+
+Claude Code 스킬(판단 단계를 Claude 가 하는 경로)까지 쓰려면 스킬 폴더를 Claude Code 가 읽는 곳에 링크한다. 무료 LLM 경로만 쓰면 필요 없다.
+
+```bash
+ln -s "$PWD/skill/lecture-recon" ~/.claude/skills/lecture-recon
 ```
 
 ## 대표 실행 순서
 
 ```bash
-L=~/research/lecture-recon/.venv/bin/lecture-recon
-$L init ai-tech-day-2026 --name "2026 AI TECH DAY" --date 2026-10-20   # ~/research/lectures/ai-tech-day-2026/
+L=$PWD/.venv/bin/lecture-recon      # 클론한 레포 안에서
+$L init ai-tech-day-2026 --name "2026 AI TECH DAY" --date 2026-10-20   # → ~/research/lectures/ai-tech-day-2026/ (다른 곳은 --root <dir>)
 # event.yaml 의 talks 를 채우고, 녹음은 raw/audio/, 사진은 raw/photos/NN/ 에 둔다
 #   (선택) talks[].aliases: [영문 이름, 연구실·회사 별칭] — verify 가 원문이 발표자 측 자료인지 가릴 때 쓴다
-E=~/research/lectures/ai-tech-day-2026
+E=~/research/lectures/ai-tech-day-2026   # init 이 만든 행사 디렉터리
 $L ingest   $E      # 오디오 → work/audio/NN.wav (16k mono), 사진 → work/photos/NN.json + 축소본
 $L asr      $E      # faster-whisper → work/asr/NN.json (기본 --device cpu --model large-v3)
 $L segment  $E      # → <slug>-transcripts/NN_<org>_<speaker>.md 초안 (기존 전사는 --force 없이는 안 덮음)
